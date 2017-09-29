@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	pack1.Test()
+	pack1.Test("Value")
 	fmt.Println("Hello World")
 }
