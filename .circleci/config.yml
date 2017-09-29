@@ -7,6 +7,9 @@ jobs:
      steps:
        - checkout
        - run: apk update
+       - run: apk add git
+       - run: apk add gcc
+       - run: apk add musl-dev
        - run: go get github.com/alecthomas/gometalinter
        - run: go get -u github.com/jstemmer/go-junit-report
        - run: go get -u github.com/360EntSecGroup-Skylar/goreporter
