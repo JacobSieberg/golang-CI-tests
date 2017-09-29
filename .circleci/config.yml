@@ -14,7 +14,6 @@ jobs:
        - run: go get -u github.com/jstemmer/go-junit-report
        - run: go get -u github.com/360EntSecGroup-Skylar/goreporter
        - run: gometalinter --install
-       - run: echo $working_directory
-       - run: gometalinter --config=gometalinterConfig.json ./test/... > /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
+       - run: gometalinter ./test/... > /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
