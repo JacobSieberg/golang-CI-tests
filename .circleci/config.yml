@@ -21,7 +21,7 @@ jobs:
        - run: 
            name: Test
            command: |
-             for fn in `go list ./gateway/...`; do
+             for fn in `go list ./test/...`; do
                go test -v -coverprofile=c.out $fn >> test.txt;
                if [ ! -f c.out ]; then
                 continue; 
