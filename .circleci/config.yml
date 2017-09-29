@@ -52,32 +52,29 @@ jobs:
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/test.txt
           destination: test_results.txt
-             - run: 
-           name: Build binaries
-           command: |
-             start=`date +%s`    
-             (
-                 echo "Building for windows amd64"
-                 GOOS=windows GOARCH=amd64 go build -o  binaries/test-windows.amd64.exe /go/src/github.com/JacobSieberg/golang-CI-tests/test/cmd/test
-                 echo "Finished windows amd64"
-             ) &
-
-             (
-                 echo "Building for linux amd64"
-                 GOOS=linux GOARCH=amd64 go build -o  binaries/test-linux.amd64 /go/src/github.com/JacobSieberg/golang-CI-tests/test/cmd/test
-                 echo "Finished linux amd64"
-             ) &
-
-             (
-                 echo "Building for linux arm"
-                 GOOS=linux GOARCH=arm go build -o  binaries/test-linux.arm /go/src/github.com/JacobSieberg/golang-CI-tests/test/cmd/test
-                 echo "Finished linux arm"
-             ) &
-
-             wait
-             end=`date +%s`
-             echo took $((end-start)) seconds
-             echo "Done"
+       - run: 
+          name: Build binaries
+          command: |
+            start=`date +%s`    
+            (
+                echo "Building for windows amd64"
+                GOOS=windows GOARCH=amd64 go build -o  binaries/test-windows.amd64.exe /go/src/github.com/JacobSieberg/golang-CI-tests/test/cmd/test
+                echo "Finished windows amd64"
+            ) &
+            (
+                echo "Building for linux amd64"
+                GOOS=linux GOARCH=amd64 go build -o  binaries/test-linux.amd64 /go/src/github.com/JacobSieberg/golang-CI-tests/test/cmd/test
+                echo "Finished linux amd64"
+            ) &
+            (
+                echo "Building for linux arm"
+                GOOS=linux GOARCH=arm go build -o  binaries/test-linux.arm /go/src/github.com/JacobSieberg/golang-CI-tests/test/cmd/test
+                echo "Finished linux arm"
+            ) &
+            wait
+            end=`date +%s`
+            echo took $((end-start)) seconds
+            echo "Done"
            when: always
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/binaries
