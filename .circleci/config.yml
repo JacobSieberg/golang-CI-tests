@@ -48,14 +48,6 @@ jobs:
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/test.txt
           destination: test_results.txt
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/coverage.html
-          destination: coverage.html
-       - store_test_results:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/test.txt
-          destination: test_results.txt
        - run: 
           name: Build binaries
           command: |
