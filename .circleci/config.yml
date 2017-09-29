@@ -16,6 +16,7 @@ jobs:
              go get github.com/alecthomas/gometalinter
              go get -u github.com/jstemmer/go-junit-report
              go get -u github.com/360EntSecGroup-Skylar/goreporter
+             gometalinter --install
            when: always
        - run: gometalinter ./test/... > /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
        - store_artifacts:
