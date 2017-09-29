@@ -3,7 +3,7 @@ jobs:
    build:
      working_directory: /go/src/github.com/JacobSieberg/golang-CI-tests
      docker:
-       - image: golang:1.9-alpine3.6
+       - image: circleci/golang:1.9-alpine3.6
      steps:
        - checkout
        - run: apk update
