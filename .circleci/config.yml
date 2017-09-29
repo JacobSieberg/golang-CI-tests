@@ -17,3 +17,29 @@ jobs:
        - run: gometalinter ./test/... > /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
+          destination: lint-results.txt
+       - run: 
+           name: Test
+           command: |
+           for fn in `go list ./gateway/...`; do
+             go test -v -coverprofile=c.out $fn >> test.txt;
+             if [ ! -f c.out ]; then
+              continue; 
+            fi;
+            cat c.out >> cover.out;
+            rm -f c.out ;
+            done;
+            touch coverage.html;
+            if [ -f cover.out ]; then 
+              awk '!seen[$0]++' cover.out>covertrimmed.out;
+              go tool cover -html=covertrimmed.out -o=coverage.html;
+            fi;
+            cat test.txt | go-junit-report > report.xml
+       - store_test_results:
+          path: /go/src/github.com/JacobSieberg/golang-CI-tests/report.xml
+       - store_artifacts:
+          path: /go/src/github.com/JacobSieberg/golang-CI-tests/coverage.html
+          destination: coverage.html
+       - store_artifacts:
+          path: /go/src/github.com/JacobSieberg/golang-CI-tests/test.txt
+          destination: test_results.txt
