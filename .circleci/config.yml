@@ -6,14 +6,17 @@ jobs:
        - image: golang:1.9-alpine3.6
      steps:
        - checkout
-       - run: apk update
-       - run: apk add git
-       - run: apk add gcc
-       - run: apk add musl-dev
-       - run: go get github.com/alecthomas/gometalinter
-       - run: go get -u github.com/jstemmer/go-junit-report
-       - run: go get -u github.com/360EntSecGroup-Skylar/goreporter
-       - run: gometalinter --install
+       - run: 
+           name: Setup
+           command: |
+             apk update
+             apk add git
+             apk add gcc
+             apk add musl-dev
+             go get github.com/alecthomas/gometalinter
+             go get -u github.com/jstemmer/go-junit-report
+             go get -u github.com/360EntSecGroup-Skylar/goreporter
+           when: always
        - run: gometalinter ./test/... > /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
