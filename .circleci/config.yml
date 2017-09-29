@@ -1,0 +1,8 @@
+version: 2
+jobs:
+   build:
+     docker:
+       - image: golang:1.9-alpine3.6
+     steps:
+       - checkout
+       - run: echo "hello world"
