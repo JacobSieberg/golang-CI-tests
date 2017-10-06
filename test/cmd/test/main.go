@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	selfupdate "github.com/sanbornm/go-selfupdate"
+	"github.com/sanbornm/go-selfupdate/selfupdate"
 )
 
 func main() {
