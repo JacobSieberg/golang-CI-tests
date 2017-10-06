@@ -68,3 +68,12 @@ jobs:
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/binaries
           destination: binaries
+   deploy:
+     working_directory: /go/src/github.com/JacobSieberg/golang-CI-tests
+     docker:
+       - image: jacobtest.azurecr.io/dockerenv
+         auth:
+           username: $DOCKER_NAME
+           password: $DOCKER_PASS
+     steps:
+       - run: echo "Hello World"
