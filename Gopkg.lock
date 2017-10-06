@@ -3,6 +3,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/kardianos/osext"
+  packages = ["."]
+  revision = "ae77be60afb1dcacde03767a8c37337fad28ac14"
+
+[[projects]]
+  branch = "master"
   name = "github.com/kr/binarydist"
   packages = ["."]
   revision = "3035450ff8b987ec4373f65c40767f096b35f2d2"
@@ -10,12 +16,18 @@
 [[projects]]
   branch = "master"
   name = "github.com/sanbornm/go-selfupdate"
-  packages = ["."]
+  packages = ["selfupdate"]
   revision = "bf295275fb1ee4e347c09330ed9a3c76cc19895a"
+
+[[projects]]
+  branch = "v0"
+  name = "gopkg.in/inconshreveable/go-update.v0"
+  packages = [".","download"]
+  revision = "d8b0b1d421aa1cbf392c05869f8abbc669bb7066"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9dc9c07c630bcc5e0028c6fd17a970dc4127a3b9250584764de3f43c345fee68"
+  inputs-digest = "9183b6895c4346013ee3c40b0d19b2ff2ab73d16c5be3420520cc2f34bc6a6f3"
   solver-name = "gps-cdcl"
   solver-version = 1

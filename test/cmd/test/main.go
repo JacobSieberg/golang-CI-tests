@@ -8,7 +8,7 @@ import (
 
 func main() {
 	var updater = &selfupdate.Updater{
-		CurrentVersion: version,
+		CurrentVersion: "1.2",
 		ApiURL:         "http://updates.yourdomain.com/",
 		BinURL:         "http://updates.yourdomain.com/",
 		DiffURL:        "http://updates.yourdomain.com/",
@@ -17,7 +17,11 @@ func main() {
 	}
 
 	if updater != nil {
-		go updater.BackgroundRun()
+		go func() {
+			if err := updater.BackgroundRun(); err != nil {
+				fmt.Println(err)
+			}
+		}()
 	}
 	fmt.Println("Hello World")
 }
