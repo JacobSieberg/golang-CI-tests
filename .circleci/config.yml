@@ -3,21 +3,12 @@ jobs:
    build:
      working_directory: /go/src/github.com/JacobSieberg/golang-CI-tests
      docker:
-       - image: golang:1.9-alpine3.6
+       - image: jacobtest.azurecr.io/dockerenv
+         auth:
+           username: $DOCKER_NAME
+           password: $DOCKER_PASS
      steps:
        - checkout
-       - run: 
-           name: Setup
-           command: |
-             apk update
-             apk add git
-             apk add gcc
-             apk add musl-dev
-             go get github.com/alecthomas/gometalinter
-             go get -u github.com/jstemmer/go-junit-report
-             go get -u github.com/360EntSecGroup-Skylar/goreporter
-             gometalinter --install
-           when: always
        - run: gometalinter ./test/... > /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
@@ -38,21 +29,14 @@ jobs:
                 awk '!seen[$0]++' cover.out>covertrimmed.out;
                 go tool cover -html=covertrimmed.out -o=coverage.html;
               fi;
-              cat test.txt | go-junit-report > report.xml
+              mkdir reports
+              cat test.txt | go-junit-report > reports/report.xml
            when: always
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/coverage.html
           destination: coverage.html
        - store_test_results:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/test.txt
-          destination: test_results.txt
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/coverage.html
-          destination: coverage.html
-       - store_test_results:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests
+          path: /go/src/github.com/JacobSieberg/golang-CI-tests/reports
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/test.txt
           destination: test_results.txt
