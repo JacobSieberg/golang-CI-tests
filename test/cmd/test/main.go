@@ -2,18 +2,19 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/sanbornm/go-selfupdate/selfupdate"
 )
 
 func main() {
 	var updater = &selfupdate.Updater{
-		CurrentVersion: "1.2",
-		ApiURL:         "http://updates.yourdomain.com/",
-		BinURL:         "http://updates.yourdomain.com/",
-		DiffURL:        "http://updates.yourdomain.com/",
+		CurrentVersion: "40",
+		ApiURL:         "https://jacobtestupdate.blob.core.windows.net/updates/",
+		BinURL:         "https://jacobtestupdate.blob.core.windows.net/updates/",
+		DiffURL:        "https://jacobtestupdate.blob.core.windows.net/updates/",
 		Dir:            "update/",
-		CmdName:        "myapp", // app name
+		CmdName:        "test-go-app", // app name
 	}
 
 	if updater != nil {
@@ -23,5 +24,9 @@ func main() {
 			}
 		}()
 	}
-	fmt.Println("Hello World")
+
+	for {
+		fmt.Println("Version 40!")
+		time.Sleep(time.Second)
+	}
 }

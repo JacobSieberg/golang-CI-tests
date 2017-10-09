@@ -65,15 +65,16 @@ jobs:
             echo took $((end-start)) seconds
             echo "Done"
           when: always
+       - run:
+          name: build updates
+          command: |
+            start=`date +%s`    
+            go-selfupdate -o ./updates ./binaries/ $CIRCLE_BUILD_NUM
+            az storage blob upload-batch -d updates -s ./updates --connection-string=$AZURE_STORAGE_CONNECTION_STRING
+            end=`date +%s`
+            echo took $((end-start)) seconds
+            echo "Done"
+            when: always
        - store_artifacts:
           path: /go/src/github.com/JacobSieberg/golang-CI-tests/binaries
           destination: binaries
-   deploy:
-     working_directory: /go/src/github.com/JacobSieberg/golang-CI-tests
-     docker:
-       - image: jacobtest.azurecr.io/dockerenv
-         auth:
-           username: $DOCKER_NAME
-           password: $DOCKER_PASS
-     steps:
-       - run: echo "Hello World"
