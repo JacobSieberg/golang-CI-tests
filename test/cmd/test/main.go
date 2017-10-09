@@ -9,7 +9,7 @@ import (
 
 func main() {
 	var updater = &selfupdate.Updater{
-		CurrentVersion: "40",
+		CurrentVersion: "41",
 		ApiURL:         "https://jacobtestupdate.blob.core.windows.net/updates/",
 		BinURL:         "https://jacobtestupdate.blob.core.windows.net/updates/",
 		DiffURL:        "https://jacobtestupdate.blob.core.windows.net/updates/",
@@ -26,7 +26,7 @@ func main() {
 	}
 
 	for {
-		fmt.Println("Version 40!")
+		fmt.Println("Version 41!")
 		time.Sleep(time.Second)
 	}
 }
