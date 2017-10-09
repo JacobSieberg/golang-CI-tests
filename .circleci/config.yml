@@ -72,9 +72,9 @@ jobs:
           name: build updates
           command: |
             start=`date +%s`
-            mv binaries/test-windows.amd64.exe windows-amd64
-            mv binaries/test-linux.amd64 linux-amd64
-            mv binaries/test-linux.arm linux-arm
+            mv binaries/test-windows.amd64.exe binaries/windows-amd64
+            mv binaries/test-linux.amd64 binaries/linux-amd64
+            mv binaries/test-linux.arm binaries/linux-arm
             go-selfupdate -o ./updates/ ./binaries/ $CIRCLE_BUILD_NUM
             az storage blob upload-batch -d updates/testapp -s ./updates --connection-string=$AZURE_STORAGE_CONNECTION_STRING
             end=`date +%s`
