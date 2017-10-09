@@ -7,7 +7,7 @@ import (
 	"github.com/sanbornm/go-selfupdate/selfupdate"
 )
 
-const version = "44"
+const version = "45"
 
 func main() {
 	var updater = &selfupdate.Updater{
@@ -16,7 +16,7 @@ func main() {
 		BinURL:         "https://jacobtestupdate.blob.core.windows.net/updates/",
 		DiffURL:        "https://jacobtestupdate.blob.core.windows.net/updates/",
 		Dir:            "update/",
-		CmdName:        "test-go-app", // app name
+		CmdName:        "testapp", // app name
 	}
 
 	if updater != nil {
