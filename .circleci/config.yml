@@ -72,11 +72,10 @@ jobs:
           name: build updates
           command: |
             start=`date +%s`
-            mv binaries/test-windows.amd64.exe binaries/windows-amd64
-            mv binaries/test-linux.amd64 binaries/linux-amd64
-            mv binaries/test-linux.arm binaries/linux-arm
-            go-selfupdate -o ./updates/testapp ./binaries/ $CIRCLE_BUILD_NUM
-            az storage blob upload-batch -d updates -s ./updates --connection-string=$AZURE_STORAGE_CONNECTION_STRING
+            sha256sum binaries/test-windows.amd64.exe > windows-amd64.sum
+            sha256sum binaries/test-linux.amd64 > linux-amd64.sum
+            sha256sum binaries/test-linux.arm > linux-arm.sum
+            az storage blob upload-batch -d updates -s ./binaries --connection-string=$AZURE_STORAGE_CONNECTION_STRING
             end=`date +%s`
             echo took $((end-start)) seconds
             echo "Done"
