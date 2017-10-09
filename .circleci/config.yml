@@ -3,7 +3,7 @@ jobs:
    build:
      working_directory: /go/src/github.com/JacobSieberg/golang-CI-tests
      docker:
-       - image: jacobtest.azurecr.io/dockerenv
+       - image: jacobtest.azurecr.io/goenv
          auth:
            username: $DOCKER_NAME
            password: $DOCKER_PASS
