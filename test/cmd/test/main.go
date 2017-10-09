@@ -7,7 +7,7 @@ import (
 	"github.com/sanbornm/go-selfupdate/selfupdate"
 )
 
-const version = "46"
+const version = "47"
 
 func main() {
 	var updater = &selfupdate.Updater{
