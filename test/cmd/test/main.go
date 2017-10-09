@@ -7,9 +7,11 @@ import (
 	"github.com/sanbornm/go-selfupdate/selfupdate"
 )
 
+const version = "43"
+
 func main() {
 	var updater = &selfupdate.Updater{
-		CurrentVersion: "42",
+		CurrentVersion: version,
 		ApiURL:         "https://jacobtestupdate.blob.core.windows.net/updates/",
 		BinURL:         "https://jacobtestupdate.blob.core.windows.net/updates/",
 		DiffURL:        "https://jacobtestupdate.blob.core.windows.net/updates/",
@@ -26,7 +28,7 @@ func main() {
 	}
 
 	for {
-		fmt.Println("Version 42!")
+		fmt.Printf("Version %s!\n", version)
 		time.Sleep(time.Second)
 	}
 }
