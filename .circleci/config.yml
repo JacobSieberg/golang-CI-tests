@@ -75,7 +75,7 @@ jobs:
             mv binaries/test-windows.amd64.exe binaries/windows-amd64
             mv binaries/test-linux.amd64 binaries/linux-amd64
             mv binaries/test-linux.arm binaries/linux-arm
-            go-selfupdate -o ./updates/testapp/ ./binaries/ $CIRCLE_BUILD_NUM
+            go-selfupdate -o ./updates/testapp ./binaries/ $CIRCLE_BUILD_NUM
             az storage blob upload-batch -d updates/ -s ./updates --connection-string=$AZURE_STORAGE_CONNECTION_STRING
             end=`date +%s`
             echo took $((end-start)) seconds
