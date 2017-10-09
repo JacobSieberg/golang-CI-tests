@@ -46,7 +46,11 @@ func waitForUpdates(settings settings) {
 			}
 			fmt.Println("Downloaded")
 			fmt.Println("Starting update...")
-			updateWithChecksum(file, sum.sum)
+			err = updateWithChecksum(file, sum.sum)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
 			fmt.Println("Updated")
 			file.Close()
 			fmt.Println("Restarting")
@@ -104,7 +108,6 @@ func download(filepath string, url string) (*os.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -117,7 +120,8 @@ func download(filepath string, url string) (*os.File, error) {
 		return nil, err
 	}
 
-	return file, nil
+	file.Close()
+	return os.Open(filepath)
 }
 
 func getCurrentSha256Sum() (string, error) {
