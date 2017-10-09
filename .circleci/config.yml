@@ -74,7 +74,7 @@ jobs:
             start=`date +%s`
             mv binaries/test-windows.amd64.exe windows-amd64
             mv binaries/test-linux.amd64 linux-amd64
-            mv binaries/test-linux.arm.exe linux-arm
+            mv binaries/test-linux.arm linux-arm
             go-selfupdate -o ./updates/testapp/ ./binaries/ $CIRCLE_BUILD_NUM
             az storage blob upload-batch -d updates -s ./updates --connection-string=$AZURE_STORAGE_CONNECTION_STRING
             end=`date +%s`
