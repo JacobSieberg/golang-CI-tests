@@ -3,31 +3,13 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/kardianos/osext"
-  packages = ["."]
-  revision = "ae77be60afb1dcacde03767a8c37337fad28ac14"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/kr/binarydist"
-  packages = ["."]
-  revision = "3035450ff8b987ec4373f65c40767f096b35f2d2"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/sanbornm/go-selfupdate"
-  packages = ["selfupdate"]
-  revision = "bf295275fb1ee4e347c09330ed9a3c76cc19895a"
-
-[[projects]]
-  branch = "v0"
-  name = "gopkg.in/inconshreveable/go-update.v0"
-  packages = [".","download"]
-  revision = "d8b0b1d421aa1cbf392c05869f8abbc669bb7066"
+  name = "github.com/inconshreveable/go-update"
+  packages = [".","internal/binarydist","internal/osext"]
+  revision = "8152e7eb6ccf8679a64582a66b78519688d156ad"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9183b6895c4346013ee3c40b0d19b2ff2ab73d16c5be3420520cc2f34bc6a6f3"
+  inputs-digest = "463c57cf8582be102c4d68b4e99b452b1b744e4ccf287418aa3a2612ab62f93a"
   solver-name = "gps-cdcl"
   solver-version = 1
