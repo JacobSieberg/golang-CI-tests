@@ -59,6 +59,7 @@ func waitForUpdates(settings settings) {
 				continue
 			}
 			fmt.Println("Restarted")
+			os.Exit(0)
 
 		}
 		time.Sleep(settings.checkInterval)
