@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-const version = "1"
+const version = "2"
 const url = "https://jacobtestupdate.blob.core.windows.net/updates/"
 
 func main() {
