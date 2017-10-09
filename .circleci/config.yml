@@ -65,16 +65,19 @@ jobs:
             echo took $((end-start)) seconds
             echo "Done"
           when: always
+       - store_artifacts:
+          path: /go/src/github.com/JacobSieberg/golang-CI-tests/binaries
+          destination: binaries
        - run:
           name: build updates
           command: |
-            start=`date +%s`    
-            go-selfupdate -o ./updates ./binaries/ $CIRCLE_BUILD_NUM
+            start=`date +%s`
+            mv binaries/test-windows.amd64.exe windows-amd64
+            mv binaries/test-linux.amd64 linux-amd64
+            mv binaries/test-linux.arm.exe linux-arm
+            go-selfupdate -o ./updates/testapp/ ./binaries/ $CIRCLE_BUILD_NUM
             az storage blob upload-batch -d updates -s ./updates --connection-string=$AZURE_STORAGE_CONNECTION_STRING
             end=`date +%s`
             echo took $((end-start)) seconds
             echo "Done"
-            when: always
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/binaries
-          destination: binaries
+          when: always
