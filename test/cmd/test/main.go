@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-const version = "4"
+const version = "5"
 
 func main() {
 	for {
