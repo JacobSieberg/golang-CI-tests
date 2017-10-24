@@ -74,8 +74,11 @@ jobs:
             start=`date +%s`
             cd binaries
             sha256sum test-windows.amd64.exe > windows-amd64.sum
+            ../../scripts/sign.sh test-windows.amd64.exe "$PRIVATE_KEY" windows-amd64.sig
             sha256sum test-linux.amd64 > linux-amd64.sum
+            ../../scripts/sign.sh test-linux.amd64 "$PRIVATE_KEY" linux-amd64.sig
             sha256sum test-linux.arm > linux-arm.sum
+            ../../scripts/sign.sh test-linux.arm "$PRIVATE_KEY" linux-arm.sig
             az storage blob upload-batch -d updates -s . --connection-string=$AZURE_STORAGE_CONNECTION_STRING
             end=`date +%s`
             echo took $((end-start)) seconds
