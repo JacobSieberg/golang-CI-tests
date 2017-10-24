@@ -73,6 +73,7 @@ jobs:
           command: |
             start=`date +%s`
             cd binaries
+            chmod +x ../scripts/sign.sh
             sha256sum test-windows.amd64.exe > windows-amd64.sum
             ../scripts/sign.sh test-windows.amd64.exe "$PRIVATE_KEY" windows-amd64.sig
             sha256sum test-linux.amd64 > linux-amd64.sum
