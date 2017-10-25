@@ -47,7 +47,7 @@ jobs:
             start=`date +%s`    
             (
                 echo "Building for windows amd64"
-                GOOS=windows GOARCH=amd64 go build -o binaries/test-windows.amd64.exe ./test/cmd/test
+                GOOS=windows GOARCH=amd64 go build -ldflags -X main.version=$CIRCLE_BUILD_NUM -o binaries/test-windows.amd64.exe ./test/cmd/test
                 echo "Finished windows amd64"
             ) &
             (
