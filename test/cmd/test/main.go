@@ -9,7 +9,7 @@ import (
 )
 
 //Version number
-const Version = "2"
+var Version = "2"
 
 func main() {
 	go exitOnSig()
