@@ -2,9 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"os/signal"
-	"syscall"
 	"time"
 )
 
@@ -20,8 +17,8 @@ func main() {
 }
 
 func exitOnSig() {
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGINT)
-	fmt.Println(<-sigs)
-	os.Exit(0)
+	// sigs := make(chan os.Signal, 1)
+	// signal.Notify(sigs, syscall.SIGINT)
+	// fmt.Println(<-sigs)
+	// os.Exit(0)
 }
