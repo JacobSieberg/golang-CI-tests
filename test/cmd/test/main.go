@@ -12,6 +12,7 @@ import (
 const Version = "2"
 
 func main() {
+	go exitOnSig()
 	for {
 		fmt.Printf("Version %s\n", Version)
 		time.Sleep(time.Second * 5)
