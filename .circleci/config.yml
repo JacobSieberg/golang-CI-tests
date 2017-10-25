@@ -47,17 +47,17 @@ jobs:
             start=`date +%s`    
             (
                 echo "Building for windows amd64"
-                GOOS=windows GOARCH=amd64 go build -ldflags -X main.version=$CIRCLE_BUILD_NUM -o binaries/test-windows.amd64.exe ./test/cmd/test
+                GOOS=windows GOARCH=amd64 go build -ldflags "-X main.Version=$CIRCLE_BUILD_NUM" -o binaries/test-windows.amd64.exe ./test/cmd/test
                 echo "Finished windows amd64"
             ) &
             (
                 echo "Building for linux amd64"
-                GOOS=linux GOARCH=amd64 go build -o  binaries/test-linux.amd64 ./test/cmd/test
+                GOOS=linux GOARCH=amd64 go build -ldflags "-X main.Version=$CIRCLE_BUILD_NUM" -o  binaries/test-linux.amd64 ./test/cmd/test
                 echo "Finished linux amd64"
             ) &
             (
                 echo "Building for linux arm"
-                GOOS=linux GOARCH=arm go build -o  binaries/test-linux.arm ./test/cmd/test
+                GOOS=linux GOARCH=arm go build -ldflags "-X main.Version=$CIRCLE_BUILD_NUM" -o  binaries/test-linux.arm ./test/cmd/test
                 echo "Finished linux arm"
             ) &
             wait

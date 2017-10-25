@@ -8,11 +8,12 @@ import (
 	"time"
 )
 
-const version = "2"
+//Version number
+const Version = "2"
 
 func main() {
 	for {
-		fmt.Printf("Version %s\n", version)
+		fmt.Printf("Version %s\n", Version)
 		time.Sleep(time.Second * 5)
 	}
 }
