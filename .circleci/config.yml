@@ -3,85 +3,13 @@ jobs:
    build:
      working_directory: /go/src/github.com/JacobSieberg/golang-CI-tests
      docker:
-       - image: jacobtest.azurecr.io/goenv
+       - image: glowtest.azurecr.io/builder
          auth:
-           username: $DOCKER_NAME
-           password: $DOCKER_PASS
+           username: $CR_NAME
+           password: $CR_PASS
      steps:
        - checkout
-       - run: dep ensure
-       - run: gometalinter ./test/... > /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/lint-results.txt
-          destination: lint-results.txt
-       - run: 
-           name: Test
-           command: |
-             for fn in `go list ./test/...`; do
-               go test -v -coverprofile=c.out $fn >> test.txt;
-               if [ ! -f c.out ]; then
-                continue; 
-              fi;
-              cat c.out >> cover.out;
-              rm -f c.out ;
-              done;
-              touch coverage.html;
-              if [ -f cover.out ]; then 
-                awk '!seen[$0]++' cover.out>covertrimmed.out;
-                go tool cover -html=covertrimmed.out -o=coverage.html;
-              fi;
-              mkdir reports
-              cat test.txt | go-junit-report > reports/report.xml
-           when: always
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/coverage.html
-          destination: coverage.html
-       - store_test_results:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/reports
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/test.txt
-          destination: test_results.txt
-       - run: 
-          name: Build binaries
-          command: |
-            start=`date +%s`    
-            (
-                echo "Building for windows amd64"
-                GOOS=windows GOARCH=amd64 go build -ldflags "-X main.Version=$CIRCLE_BUILD_NUM" -o binaries/test-windows.amd64.exe ./test/cmd/test
-                echo "Finished windows amd64"
-            ) &
-            (
-                echo "Building for linux amd64"
-                GOOS=linux GOARCH=amd64 go build -ldflags "-X main.Version=$CIRCLE_BUILD_NUM" -o  binaries/test-linux.amd64 ./test/cmd/test
-                echo "Finished linux amd64"
-            ) &
-            (
-                echo "Building for linux arm"
-                GOOS=linux GOARCH=arm go build -ldflags "-X main.Version=$CIRCLE_BUILD_NUM" -o  binaries/test-linux.arm ./test/cmd/test
-                echo "Finished linux arm"
-            ) &
-            wait
-            end=`date +%s`
-            echo took $((end-start)) seconds
-            echo "Done"
-          when: always
-       - store_artifacts:
-          path: /go/src/github.com/JacobSieberg/golang-CI-tests/binaries
-          destination: binaries
-       - run:
-          name: build updates
-          command: |
-            start=`date +%s`
-            cd binaries
-            chmod +x ../scripts/sign.sh
-            sha256sum test-windows.amd64.exe > windows-amd64.sum
-            ../scripts/sign.sh test-windows.amd64.exe "$PRIVATE_KEY" windows-amd64.sig
-            sha256sum test-linux.amd64 > linux-amd64.sum
-            ../scripts/sign.sh test-linux.amd64 "$PRIVATE_KEY" linux-amd64.sig
-            sha256sum test-linux.arm > linux-arm.sum
-            ../scripts/sign.sh test-linux.arm "$PRIVATE_KEY" linux-arm.sig
-            az storage blob upload-batch -d updates -s . --connection-string=$AZURE_STORAGE_CONNECTION_STRING
-            end=`date +%s`
-            echo took $((end-start)) seconds
-            echo "Done"
-          when: always
+       - setup_remote_docker
+       - run: docker login $CR_URI -u $CR_NAME -p $CR_PASS
+       - run: docker build -t glowtest-azurecr.io/test-app ./test/cmd/test/
+       - run: docker push glowtest-azurecr.io/test-app

@@ -2,23 +2,17 @@ package main
 
 import (
 	"fmt"
-	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 //Version number
 var Version = "2"
 
 func main() {
-	go exitOnSig()
-	for {
-		fmt.Printf("Version %s\n", Version)
-		time.Sleep(time.Second * 5)
-	}
-}
-
-func exitOnSig() {
-	// sigs := make(chan os.Signal, 1)
-	// signal.Notify(sigs, syscall.SIGINT)
-	// fmt.Println(<-sigs)
-	// os.Exit(0)
+	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(200, fmt.Sprintf("Hello World Version: %s", Version))
+	})
+	r.Run()
 }
