@@ -7,7 +7,7 @@ import (
 )
 
 //Version number
-var Version = "2"
+var Version = "3"
 
 func main() {
 	r := gin.Default()
