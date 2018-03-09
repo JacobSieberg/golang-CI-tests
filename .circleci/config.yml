@@ -11,5 +11,8 @@ jobs:
        - checkout
        - setup_remote_docker
        - run: docker login $CR_URI -u $CR_NAME -p $CR_PASS
-       - run: docker build -t glowtest.azurecr.io/test-app ./test/cmd/test/
-       - run: docker push glowtest.azurecr.io/test-app
+       - run: docker build -t glowtest.azurecr.io/test-app:$CIRCLE_BUILD_NUM ./test/cmd/test/
+       - run: docker push glowtest.azurecr.io/test-app:$CIRCLE_BUILD_NUM
+       - run: az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
+      #  - run: az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
+      #  - run: kubectl apply -f k8s
