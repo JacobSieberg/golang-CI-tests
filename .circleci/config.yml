@@ -12,4 +12,4 @@ jobs:
        - setup_remote_docker
        - run: docker login $CR_URI -u $CR_NAME -p $CR_PASS
        - run: docker build -t glowtest-azurecr.io/test-app ./test/cmd/test/
-       - run: docker push glowtest-azurecr.io/test-app
+       - run: docker push glowtest.azurecr.io/test-app
