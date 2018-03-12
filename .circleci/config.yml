@@ -21,7 +21,7 @@ jobs:
           command: |
             for D in `find test/cmd -type d`
             do
-              $DNAME=$(basename $D)
+              DNAME=$(basename $D)
               GOOS=linux GOARCH=amd64 go build test/cmd/$D/ -o output/$DNAME/app
             done
        - run:
@@ -29,7 +29,7 @@ jobs:
           command: |
             for D in `find docker -type d`
             do
-              $DNAME=$(basename $D)
+              DNAME=$(basename $D)
               cp output/$DNAME/app $D/app
               docker build -t $CR_URI/$DNAME:$CIRCLE_BUILD_NUM $D
             done
