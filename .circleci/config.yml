@@ -25,7 +25,7 @@ jobs:
               GOOS=linux GOARCH=amd64 go build -o output/$DNAME/app ./test/cmd/$DNAME/
             done
        - run:
-          name: Build docker containers
+          name: Build docker images
           command: |
             for D in `find docker/* -type d`
             do
@@ -37,9 +37,10 @@ jobs:
           name: Push docker images
           command: |
             docker login $CR_URI -u $CR_NAME -p $CR_PASS
-            for D in `find docker -type d -printf '%f\n'`
+            for D in `find docker -type d`
             do
-              docker push -t $CR_URI/$D:$CIRCLE_BUILD_NUM
+              DNAME=$(basename $D)
+              docker push -t $CR_URI/$DNAME:$CIRCLE_BUILD_NUM
             done
        - deploy:
           name: Deploy to kubernetes
