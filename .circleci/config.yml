@@ -15,7 +15,7 @@ jobs:
        - run: docker push glowtest.azurecr.io/test-app:$CIRCLE_BUILD_NUM
        - run: az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
        - run: az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
-       - run: VERSION=$CIRCLE_BUILD_NUM cat k8s/dep.yaml | mo | kubectl apply
-       - run: cat k8s/ser.yaml | mo | kubectl apply
+       - run: VERSION=$CIRCLE_BUILD_NUM cat k8s/dep.yaml | mo | kubectl apply -f -
+       - run: cat k8s/ser.yaml | mo | kubectl apply -f -
       #  - run: kubectl set image deployment/test-app test-app=glowtest.azurecr.io/test-app:$CIRCLE_BUILD_NUM
        - run: kubectl rollout status deployment/test-app
