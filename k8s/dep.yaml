@@ -5,7 +5,7 @@ metadata:
   labels:
     app: test-app
 spec:
-  replicas: 1
+  # replicas: 1
   selector:
     matchLabels:
       app: test-app
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: test-app
-        image:  glowtest.azurecr.io/test-app
+        image:  glowtest.azurecr.io/test-app/{{VERSION}}
         ports:
         - containerPort: 8080
       imagePullSecrets:
