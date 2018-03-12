@@ -17,14 +17,28 @@ jobs:
             dep ensure
           when: always
        - run:
-          name: Build
+          name: Build binaries
           command: |
-            docker build -t $CR_URI/test-app:$CIRCLE_BUILD_NUM
+            for D in `find test/cmd -type d -printf '%f\n'`
+            do
+              GOOS=linux GOARCH=amd64 go build test/cmd/$D/ -o output/$D/app
+            done
+       - run:
+          name: Build docker containers
+          command: |
+            for D in `find docker -type d -printf '%f\n'`
+            do
+              cp output/$D/app docker/$D/app
+              docker build -t $CR_URI/$D:$CIRCLE_BUILD_NUM docker/$D
+            done
        - deploy:
-          name: Push
+          name: Push docker images
           command: |
             docker login $CR_URI -u $CR_NAME -p $CR_PASS
-            docker push glowtest.azurecr.io/test-app:$CIRCLE_BUILD_NUM
+            for D in `find docker -type d -printf '%f\n'`
+            do
+              docker push -t $CR_URI/$D:$CIRCLE_BUILD_NUM
+            done
        - deploy:
           name: Deploy to kubernetes
           command: |
