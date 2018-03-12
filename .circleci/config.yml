@@ -19,7 +19,7 @@ jobs:
        - run:
           name: Build binaries
           command: |
-            for D in `find test/cmd -type d`
+            for D in `find test/cmd/* -type d`
             do
               DNAME=$(basename $D)
               GOOS=linux GOARCH=amd64 go build -o output/$DNAME/app test/cmd/$DNAME/
@@ -27,7 +27,7 @@ jobs:
        - run:
           name: Build docker containers
           command: |
-            for D in `find docker -type d`
+            for D in `find docker/* -type d`
             do
               DNAME=$(basename $D)
               cp output/$DNAME/app docker/$DNAME/app
