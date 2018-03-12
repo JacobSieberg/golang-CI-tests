@@ -40,7 +40,7 @@ jobs:
             for D in `find docker -type d`
             do
               DNAME=$(basename $D)
-              docker push -t $CR_URI/$DNAME:$CIRCLE_BUILD_NUM
+              docker push $CR_URI/$DNAME:$CIRCLE_BUILD_NUM
             done
        - deploy:
           name: Deploy to kubernetes
