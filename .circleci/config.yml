@@ -16,7 +16,6 @@ jobs:
        - run: az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
        - run: az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
        - run: cat k8s/dep.yaml | VERSION=$CIRCLE_BUILD_NUM mo | kubectl apply -f -
-       - run: cat k8s/dep.yaml | VERSION=$CIRCLE_BUILD_NUM mo
        - run: cat k8s/ser.yaml | mo | kubectl apply -f -
       #  - run: kubectl set image deployment/test-app test-app=glowtest.azurecr.io/test-app:$CIRCLE_BUILD_NUM
        - run: kubectl rollout status deployment/test-app

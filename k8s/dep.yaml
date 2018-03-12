@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: test-app
-        image:  glowtest.azurecr.io/test-app/{{VERSION}}
+        image:  glowtest.azurecr.io/test-app:{{VERSION}}
         ports:
         - containerPort: 8080
       imagePullSecrets:
