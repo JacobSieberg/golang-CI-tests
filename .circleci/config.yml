@@ -16,11 +16,6 @@ jobs:
             mkdir output
             dep ensure
           when: always
-       - run: 
-          name: Lint
-          command: |
-            gometalinter --config=gometalinterConfig.json ./gateway/... > output/lint-results.txt
-          when: always
        - run:
           name: Build
           command: |
