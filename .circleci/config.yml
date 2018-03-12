@@ -22,7 +22,7 @@ jobs:
             for D in `find test/cmd -type d`
             do
               DNAME=$(basename $D)
-              GOOS=linux GOARCH=amd64 go build test/cmd/$D/ -o output/$DNAME/app
+              GOOS=linux GOARCH=amd64 go build $D/ -o output/$DNAME/app
             done
        - run:
           name: Build docker containers
