@@ -19,17 +19,19 @@ jobs:
        - run:
           name: Build binaries
           command: |
-            for D in `find test/cmd -type d -printf '%f\n'`
+            for D in `find test/cmd -type d`
             do
-              GOOS=linux GOARCH=amd64 go build test/cmd/$D/ -o output/$D/app
+              $DNAME=$(basename $D)
+              GOOS=linux GOARCH=amd64 go build test/cmd/$D/ -o output/$DNAME/app
             done
        - run:
           name: Build docker containers
           command: |
-            for D in `find docker -type d -printf '%f\n'`
+            for D in `find docker -type d`
             do
-              cp output/$D/app docker/$D/app
-              docker build -t $CR_URI/$D:$CIRCLE_BUILD_NUM docker/$D
+              $DNAME=$(basename $D)
+              cp output/$DNAME/app $D/app
+              docker build -t $CR_URI/$DNAME:$CIRCLE_BUILD_NUM $D
             done
        - deploy:
           name: Push docker images
