@@ -37,7 +37,7 @@ jobs:
           name: Push docker images
           command: |
             docker login $CR_URI -u $CR_NAME -p $CR_PASS
-            for D in `find docker -type d`
+            for D in `find docker/* -type d`
             do
               DNAME=$(basename $D)
               docker push $CR_URI/$DNAME:$CIRCLE_BUILD_NUM
