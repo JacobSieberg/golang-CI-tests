@@ -1,9 +1,9 @@
 FROM glowtest.azurecr.io/builder AS builder
-WORKDIR /go/src/app/
-COPY ./  /go/src/app/
+COPY ./ /go/src/github.com/jacobsieberg/golang-ci-tests
+WORKDIR /go/src/github.com/jacobsieberg/golang-ci-tests/cmd/service-name
 RUN go get
 RUN GOOS=linux CGO_ENABLED=0 go build -o app .
 
 FROM alpine
-COPY --from=builder /go/src/app/app /app
+COPY --from=builder /go/src/github.com/jacobsieberg/golang-ci-tests/cmd/service-name/app /app
 ENTRYPOINT [ "/app" ]
