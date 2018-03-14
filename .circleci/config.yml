@@ -17,8 +17,8 @@ jobs:
             for D in `find test/cmd/* -type d`
             do
               DNAME=$(basename $D)
-              if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
-                docker build -t $CR_URI/$CIRCLE_TAG test/cmd/$DNAME/
+              if echo "$CIRCLE_TAG" | grep -q "^$DNAME-"; then
+                docker build -t $CR_URI/$DNAME:${CIRCLE_TAG#$DNAME} test/cmd/$DNAME/
               else 
                 docker build test/cmd/$DNAME
               fi
@@ -29,8 +29,8 @@ jobs:
             for D in `find test/cmd/* -type d`
             do
               DNAME=$(basename $D)
-              if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
-                docker push $CR_URI/$CIRCLE_TAG
+              if echo "$CIRCLE_TAG" | grep -q "^$DNAME-"; then
+                docker push $CR_URI/$DNAME:${CIRCLE_TAG#$DNAME}
               fi
             done
        - deploy:
@@ -39,10 +39,10 @@ jobs:
             for D in `find test/cmd/* -type d`
             do
               DNAME=$(basename $D)
-              if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
+              if echo "$CIRCLE_TAG" | grep -q "^$DNAME-"; then
                 az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
                 az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
-                IMAGE=$CIRCLE_TAG mo $(find k8s/$DNAME/*) | kubectl apply -f -
+                IMAGE=$DNAME:${CIRCLE_TAG#$DNAME} mo $(find k8s/$DNAME/*) | kubectl apply -f -
                 kubectl rollout status deployment/$DNAME
               fi
             done
