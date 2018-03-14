@@ -30,7 +30,7 @@ jobs:
             for D in `find docker/* -type d`
             do
               DNAME=$(basename $D)
-              if [ "$CIRCLE_TAG" =~ "^$DNAME:" ] then;
+              if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
                 cp output/$DNAME/app docker/$DNAME/app
                 docker build -t $CR_URI/$CIRCLE_TAG docker/$DNAME
               fi
@@ -42,7 +42,7 @@ jobs:
             for D in `find docker/* -type d`
             do
               DNAME=$(basename $D)
-              if [ "$CIRCLE_TAG" =~ "^$DNAME:" ] then;
+              if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
                 docker push $CR_URI/$CIRCLE_TAG
               fi
             done
