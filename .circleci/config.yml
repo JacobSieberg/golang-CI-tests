@@ -10,6 +10,7 @@ jobs:
      steps:
        - checkout
        - setup_remote_docker
+       - docker login $CR_URI -u $CR_NAME -p $CR_PASS
        - run:
           name: Build docker images
           command: |
@@ -29,7 +30,6 @@ jobs:
             do
               DNAME=$(basename $D)
               if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
-                docker login $CR_URI -u $CR_NAME -p $CR_PASS              
                 docker push $CR_URI/$CIRCLE_TAG
               fi
             done
