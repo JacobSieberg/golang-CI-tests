@@ -10,7 +10,7 @@ jobs:
      steps:
        - checkout
        - setup_remote_docker
-       - docker login $CR_URI -u $CR_NAME -p $CR_PASS
+       - run: docker login $CR_URI -u $CR_NAME -p $CR_PASS
        - run:
           name: Build docker images
           command: |
