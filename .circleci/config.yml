@@ -18,7 +18,7 @@ jobs:
             do
               DNAME=$(basename $D)
               if echo "$CIRCLE_TAG" | grep -q "^$DNAME-"; then
-                docker build -t $CR_URI/$DNAME:${CIRCLE_TAG#$DNAME} cmd/$DNAME/
+                docker build -t $CR_URI/$DNAME:${CIRCLE_TAG#-$DNAME} cmd/$DNAME/
               else 
                 docker build cmd/$DNAME
               fi
