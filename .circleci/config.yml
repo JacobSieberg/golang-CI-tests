@@ -30,7 +30,7 @@ jobs:
             do
               DNAME=$(basename $D)
               if echo "$CIRCLE_TAG" | grep -q "^$DNAME-"; then
-                docker push $CR_URI/$DNAME:${CIRCLE_TAG#$DNAME}
+                docker push $CR_URI/$DNAME:${CIRCLE_TAG#-$DNAME}
               fi
             done
        - deploy:
@@ -42,7 +42,7 @@ jobs:
               if echo "$CIRCLE_TAG" | grep -q "^$DNAME-"; then
                 az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
                 az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
-                IMAGE=$DNAME:${CIRCLE_TAG#$DNAME} mo $(find k8s/$DNAME/*) | kubectl apply -f -
+                IMAGE=$DNAME:${CIRCLE_TAG#-$DNAME} mo $(find k8s/$DNAME/*) | kubectl apply -f -
                 kubectl rollout status deployment/$DNAME
               fi
             done
