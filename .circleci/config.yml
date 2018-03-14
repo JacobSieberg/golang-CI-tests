@@ -39,9 +39,9 @@ jobs:
             for D in `find test/cmd/* -type d`
             do
               DNAME=$(basename $D)
-              az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
-              az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
               if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
+                az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
+                az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
                 IMAGE=$CIRCLE_TAG mo $(find k8s/$DNAME/*) | kubectl apply -f -
                 kubectl rollout status deployment/$DNAME
               fi
