@@ -30,8 +30,10 @@ jobs:
             for D in `find docker/* -type d`
             do
               DNAME=$(basename $D)
-              cp output/$DNAME/app docker/$DNAME/app
-              docker build -t $CR_URI/$DNAME:$CIRCLE_BUILD_NUM docker/$DNAME
+              if [ "$CIRCLE_TAG" =~ "^$DNAME:" ] then;
+                cp output/$DNAME/app docker/$DNAME/app
+                docker build -t $CR_URI/$CIRCLE_TAG docker/$DNAME
+              fi
             done
        - deploy:
           name: Push docker images
@@ -40,7 +42,9 @@ jobs:
             for D in `find docker/* -type d`
             do
               DNAME=$(basename $D)
-              docker push $CR_URI/$DNAME:$CIRCLE_BUILD_NUM
+              if [ "$CIRCLE_TAG" =~ "^$DNAME:" ] then;
+                docker push $CR_URI/$CIRCLE_TAG
+              fi
             done
        - deploy:
           name: Deploy to kubernetes
