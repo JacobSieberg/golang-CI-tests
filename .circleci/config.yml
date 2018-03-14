@@ -36,15 +36,13 @@ jobs:
        - deploy:
           name: Deploy to kubernetes
           command: |
-            if [ -n $CIRCLE_TAG ]; then
+            for D in `find test/cmd/* -type d`
+            do
+              DNAME=$(basename $D)
               az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
               az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
-              for D in `find test/cmd/* -type d`
-              do
-                DNAME=$(basename $D)
-                if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
-                  IMAGE=$CIRCLE_TAG mo $(find k8s/$DNAME/*) | kubectl apply -f -
-                  kubectl rollout status deployment/$DNAME
-                fi
-                done
-            fi
+              if echo "$CIRCLE_TAG" | grep -q "^$DNAME:"; then
+                IMAGE=$CIRCLE_TAG mo $(find k8s/$DNAME/*) | kubectl apply -f -
+                kubectl rollout status deployment/$DNAME
+              fi
+            done
