@@ -36,7 +36,7 @@ jobs:
        - deploy:
           name: Deploy to kubernetes
           command: |
-            if [ -z $CIRCLE_TAG ]; then
+            if [ -n $CIRCLE_TAG ]; then
               az login --service-principal -u $AZURE_USER -p $AZURE_SECRET --tenant $AZURE_TENANT
               az aks get-credentials -n $AKS_NAME -g $AKS_GROUP
               for D in `find test/cmd/* -type d`
