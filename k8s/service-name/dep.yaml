@@ -1,22 +1,22 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: test-app
+  name: service-name
   labels:
-    app: test-app
+    app: service-name
 spec:
   # replicas: 1
   selector:
     matchLabels:
-      app: test-app
+      app: service-name
   template:
     metadata:
       labels:
-        app: test-app
+        app: service-name
     spec:
       containers:
-      - name: test-app
-        image:  glowtest.azurecr.io/test-app:{{VERSION}}
+      - name: service-name
+        image:  glowtest.azurecr.io/{{IMAGE}}
         ports:
         - containerPort: 8080
       imagePullSecrets:
