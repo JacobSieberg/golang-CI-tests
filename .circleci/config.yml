@@ -12,8 +12,8 @@ jobs:
       - run: 
           name: Build binaries
           command: |
-            echo $GITHUB_TOKEN
-            go get
+            env
+            go get ./...
             go build -o bin/service-name ./cmd/service-name/main.go
       - store_artifacts:
           path: bin/*
