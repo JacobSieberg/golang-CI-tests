@@ -1,0 +1,56 @@
+version: 2
+jobs:
+  build:
+    working_directory: /go/src/github.com/katoengineering/genosys-gw
+    docker:
+      - image: katoengineering.azurecr.io/goenv-debian
+        auth:
+          username: $CR_NAME
+          password: $CR_PASS
+    steps:
+      - checkout
+      - run: 
+          name: Build binaries
+          command: |
+            go build ./cmd/service-name/main.go -o bin/service-name
+            echo $GITHUB_TOKEN
+      - store_artifacts:
+          path: bin/*
+          destination: ./
+  deploy:
+    working_directory: /go/src/github.com/katoengineering/genosys-gw
+    docker:
+      - image: katoengineering.azurecr.io/goenv-debian
+        auth:
+          username: $CR_NAME
+          password: $CR_PASS
+    steps:
+      - checkout
+      - run: 
+          name: Build binaries
+          command: |
+            go build ./cmd/service-name/main.go -o bin/service-name
+      - run:
+          name: Deploy application
+          command: |
+            echo $GITHUB_TOKEN
+      - store_artifacts:
+          path: output
+          destination: ./
+
+workflows:
+  version: 2
+  un-tagged:
+    jobs:
+      - build:
+          filters:
+            tags:
+              ignore: /.*/
+  tagged:
+    jobs:
+      - deploy:
+          filters:
+            tags:
+              only: /.*/ 
+            branches:
+              ignore: /.*/
